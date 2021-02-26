@@ -1,19 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
 
-function ChatMessage() {
+function ChatMessage({ text, name, image, timestamp }) {
     return (
         <Container>
             <UserAvatar>
-                <img src="#" />
+                <img src={image} />
             </UserAvatar>
             <MessageContent>
                 <Name>
-                  Tarik
-                  <span>Some date</span>
+                  {name}
+                   <span>{new Date(timestamp.toDate()).toUTCString()}</span>
                 </Name>
                 <Text>
-                  Good man
+                  {text}
                 </Text>
             </MessageContent>
         </Container>
@@ -53,12 +53,12 @@ const Name = styled.span`
 font-weight: 900;
 font-size: 15px;
 line-height: 1.4;
-span{
-    magrin-left: 8px; 
-    font-weight: 400;
-    color: rgba(97,96,97)
-    font-size: 13px;
-}
+ span {
+        margin-left: 8px;
+        font-weight: 400;
+        color: rgb(97,96,97);
+        font-size: 13px;
+    }
 `
 
 const Text = styled.span``

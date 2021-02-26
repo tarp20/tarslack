@@ -7,24 +7,24 @@ import styled from 'styled-components';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 import db from './firebase';
-import {auth, provider} from './firebase';
+import { auth, provider } from './firebase';
 
 function App() {
 
-  const [rooms, setRooms] = useState([])
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')))
+  const [rooms, setRooms] = useState([]) 
+  const [ user, setUser ] = useState(JSON.parse(localStorage.getItem('user'))); 
 
-  const getChannels = () =>{
-     db.collection('rooms').onSnapshot((snapshot) =>{
-       setRooms(snapshot.docs.map((doc) => {
-         return {id: doc.id,name: doc.data().name };
-       })) 
-     })
+
+    const getChannels = () => {
+    db.collection('rooms').onSnapshot((snapshot) => {
+      setRooms(snapshot.docs.map((doc) => {
+        return { id: doc.id, name: doc.data().name }
+      }))
+    })
+
   }
   
-  useEffect(() =>{
-    getChannels(); 
-  },[])
+ 
 
  const signOut = () => {
     auth.signOut().then(()=>{
@@ -33,6 +33,11 @@ function App() {
     })
 
   }
+
+   useEffect(() =>{
+    getChannels();
+  }, [])
+
   
 
   return (
@@ -47,9 +52,9 @@ function App() {
           <Main>
             <Sidebar rooms={rooms} />
           <Switch>
-            <Router path="/room/:channelId">
-              <Chat />
-            </Router>
+            <Route path="/room/:channelId">
+              <Chat user={user} />
+            </Route>
             <Router path="/">
               Select or Create Channel
             </Router>
@@ -69,7 +74,7 @@ const Container = styled.div`
 width: 100%;
 height: 100vh;
 display: grid;
-grid-template-rows: 38px auto
+grid-template-rows: 38px minmax(0, 1fr);
 `
 
 const Main = styled.div`
